@@ -27,9 +27,9 @@ def ejecutar_simulacion():
     # -------------------------------------------------------------------------
     # OPERACIÓN 1: Registro de cliente válido
     # -------------------------------------------------------------------------
-    logger.info("\n--- OPERACIÓN 1: Registrar Cliente Válido (Daniel Castañeda) ---")
+    logger.info("\n--- OPERACIÓN 1: Registrar Cliente Válido (Juan Pérez) ---")
     try:
-        c1 = Cliente("Daniel Castañeda", "daniel@email.com", "3001234567", "10158976")
+        c1 = Cliente("Juan Pérez", "juan.perez@email.com", "3001234567", "10158976")
         clientes.append(c1)
         logger.info(f"ÉXITO: Cliente registrado. {c1.obtener_detalles()}")
     except ClienteInvalidoError as e:
