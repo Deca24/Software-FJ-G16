@@ -6,5 +6,4 @@ Repositorio del Grupo 16 para el desarrollo del proyecto de Ingeniería de Softw
 - Integrante 2: DANIEL ESTEBAN CASTAÑEDA ARANGO
 
 ## Descripción
-Este repositorio contiene el código fuente, documentación y recursos del proyecto: "Sistema Integral de Gestión de Clientes, Servicios y 
-Reservas"
+Este repositorio contiene el código fuente, documentación y recursos del proyecto: "Sistema Integral de Gestión de Clientes, Servicios y Reservas"
