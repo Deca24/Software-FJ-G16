@@ -154,21 +154,15 @@ class ReservasView(tk.Frame):
         # Clientes
         clientes = [f"{c.nombre} ({c.id[-8:]})" for c in self.controller.base_datos_clientes]
         self.combo_cliente['values'] = clientes
-        if clientes:
-            val_actual = self.combo_cliente.get()
-            if val_actual not in clientes:
-                self.combo_cliente.current(0)
-        else:
+        val_cliente = self.combo_cliente.get()
+        if val_cliente not in clientes:
             self.combo_cliente.set("")
 
         # Servicios
         servicios = [f"{s.nombre_servicio} ({s.id[-8:]})" for s in self.controller.base_datos_servicios]
         self.combo_servicio['values'] = servicios
-        if servicios:
-            val_actual = self.combo_servicio.get()
-            if val_actual not in servicios:
-                self.combo_servicio.current(0)
-        else:
+        val_servicio = self.combo_servicio.get()
+        if val_servicio not in servicios:
             self.combo_servicio.set("")
 
     def crear_reserva(self):

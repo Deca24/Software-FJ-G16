@@ -58,7 +58,6 @@ class ServiciosView(tk.Frame):
             state="readonly",
             font=("Helvetica", 10)
         )
-        self.combo_tipo.set("Reserva de Sala")
         self.combo_tipo.pack(fill="x", pady=(0, 15))
         self.combo_tipo.bind("<<ComboboxSelected>>", lambda e: self.cambiar_tipo_servicio())
 
@@ -89,6 +88,17 @@ class ServiciosView(tk.Frame):
             widget.destroy()
 
         tipo = self.combo_tipo.get()
+
+        if not tipo:
+            lbl_info = tk.Label(
+                self.frame_dinamico, 
+                text="Seleccione un tipo de servicio\npara comenzar.", 
+                font=("Helvetica", 10, "italic"),
+                bg=self.controller.bg_color, 
+                fg="#64748B"
+            )
+            lbl_info.pack(expand=True, pady=40)
+            return
 
         if tipo == "Reserva de Sala":
             tk.Label(self.frame_dinamico, text="Tipo de Sala (ej: Reunión, Conferencia):", bg=self.controller.bg_color, fg=self.controller.text_dark).pack(anchor="w", pady=2)
@@ -179,6 +189,9 @@ class ServiciosView(tk.Frame):
 
     def crear_servicio(self):
         tipo = self.combo_tipo.get()
+        if not tipo:
+            messagebox.showerror("Error de Validación", "Debe seleccionar un tipo de servicio.")
+            return
         p1 = self.ent_param1.get()
         p2 = self.ent_param2.get()
         p3 = self.ent_param3.get()
