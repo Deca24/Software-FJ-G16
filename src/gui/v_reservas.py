@@ -128,6 +128,16 @@ class ReservasView(tk.Frame):
         self.tabla.pack(fill="both", expand=True)
         scroll.config(command=self.tabla.yview)
 
+        # Mensaje instruccional sobre doble clic
+        lbl_instruccion = tk.Label(
+            frame_tabla,
+            text="💡 Consejo: Haga doble clic sobre una reserva en la lista para Confirmarla o Cancelarla.",
+            font=("Helvetica", 9, "italic"),
+            bg=self.controller.bg_color,
+            fg="#4B5563"
+        )
+        lbl_instruccion.pack(side="bottom", fill="x", pady=(5, 0))
+
         # Cabeceras
         self.tabla.heading("ID", text="ID")
         self.tabla.heading("Cliente", text="Cliente")
@@ -197,11 +207,8 @@ class ReservasView(tk.Frame):
 
     def limpiar_formulario(self):
         self.ent_fecha.delete(0, tk.END)
-        # los combos quedan con la primera opción seleccionada
-        if self.combo_cliente['values']:
-            self.combo_cliente.current(0)
-        if self.combo_servicio['values']:
-            self.combo_servicio.current(0)
+        self.combo_cliente.set("")
+        self.combo_servicio.set("")
 
     # ------------------------------------------------------------------
     # Interacción con tabla (doble click)
