@@ -75,10 +75,10 @@ class ReservasView(tk.Frame):
         )
         self.combo_servicio.pack(fill="x", pady=(0, 8))
 
-        # Fecha (DD/MM/YYYY)
+        # Fecha y Hora (DD/MM/YYYY HH:MM)
         tk.Label(
             self.frame_form,
-            text="Fecha (DD/MM/YYYY):",
+            text="Fecha y Hora (DD/MM/YYYY HH:MM):",
             bg=self.controller.bg_color,
             fg=self.controller.text_dark,
         ).pack(anchor="w", pady=(5, 2))
@@ -154,13 +154,22 @@ class ReservasView(tk.Frame):
         # Clientes
         clientes = [f"{c.nombre} ({c.id[-8:]})" for c in self.controller.base_datos_clientes]
         self.combo_cliente['values'] = clientes
-        if clientes and self.combo_cliente.current() == -1:
-            self.combo_cliente.current(0)
+        if clientes:
+            val_actual = self.combo_cliente.get()
+            if val_actual not in clientes:
+                self.combo_cliente.current(0)
+        else:
+            self.combo_cliente.set("")
+
         # Servicios
         servicios = [f"{s.nombre_servicio} ({s.id[-8:]})" for s in self.controller.base_datos_servicios]
         self.combo_servicio['values'] = servicios
-        if servicios and self.combo_servicio.current() == -1:
-            self.combo_servicio.current(0)
+        if servicios:
+            val_actual = self.combo_servicio.get()
+            if val_actual not in servicios:
+                self.combo_servicio.current(0)
+        else:
+            self.combo_servicio.set("")
 
     def crear_reserva(self):
         # Obtener índices
@@ -174,7 +183,7 @@ class ReservasView(tk.Frame):
             fecha_str = self.ent_fecha.get().strip()
             if not fecha_str:
                 raise ReservaInvalidaError("La fecha es obligatoria.")
-            fecha = datetime.strptime(fecha_str, "%d/%m/%Y")
+            fecha = datetime.strptime(fecha_str, "%d/%m/%Y %H:%M")
 
             reserva = Reserva(cliente, servicio, fecha)
             self.controller.base_datos_reservas.append(reserva)
@@ -187,7 +196,7 @@ class ReservasView(tk.Frame):
             messagebox.showerror("Error de Validación", str(e))
         except ValueError as e:
             logger.warning(f"Formato de fecha incorrecto: {e}")
-            messagebox.showerror("Error de Fecha", "Use formato DD/MM/YYYY.")
+            messagebox.showerror("Error de Fecha", "Use formato DD/MM/YYYY HH:MM.")
         except Exception as e:
             logger.error(f"Error inesperado al crear reserva: {e}")
             messagebox.showerror("Error Inesperado", f"{e}")
@@ -278,7 +287,7 @@ class ReservasView(tk.Frame):
             id_corto = reserva.id[-8:]
             cliente_nombre = reserva.cliente.nombre
             servicio_nombre = reserva.servicio.nombre_servicio
-            fecha_str = reserva.fecha_reserva.strftime("%d/%m/%Y")
+            fecha_str = reserva.fecha_reserva.strftime("%d/%m/%Y %H:%M")
             estado = reserva.estado
             costo_str = formatear_moneda_cop(reserva.costo_final) if estado == "CONFIRMADA" else "-"
             self.tabla.insert(
