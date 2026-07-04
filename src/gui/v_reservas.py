@@ -131,7 +131,7 @@ class ReservasView(tk.Frame):
         # Mensaje instruccional sobre doble clic
         lbl_instruccion = tk.Label(
             frame_tabla,
-            text="💡 Consejo: Haga doble clic sobre una reserva en la lista para Confirmarla o Cancelarla.",
+            text="💡 Nota: Haga doble clic sobre una reserva en la lista para Confirmarla o Cancelarla.",
             font=("Helvetica", 9, "italic"),
             bg=self.controller.bg_color,
             fg="#4B5563"
