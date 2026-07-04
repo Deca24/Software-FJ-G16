@@ -46,8 +46,8 @@ class ApplicationGUI:
         self.vista_actual = None
         self.vista_actual_nombre = ""
 
-        # Vista inicial (Servicios, ya que está implementada)
-        self.mostrar_vista("servicios")
+        # Vista inicial: pantalla de bienvenida (ningún módulo seleccionado por defecto)
+        self.mostrar_vista("bienvenida")
         logger.info("Aplicación GUI iniciada correctamente.")
 
     # ---------- Sidebar ----------
@@ -147,6 +147,8 @@ class ApplicationGUI:
         elif nombre_vista == "logs":
             self.btn_logs.configure(bg=self.accent_color)
             self.vista_actual = self._obtener_o_crear_vista("logs", LogsView)
+        elif nombre_vista == "bienvenida":
+            self.vista_actual = self._obtener_o_crear_vista("bienvenida", BienvenidaView)
 
         # Refrescar datos dinámicamente al cambiar de pestaña
         if hasattr(self.vista_actual, "actualizar_tabla"):
@@ -160,6 +162,41 @@ class ApplicationGUI:
         if clave not in self.vistas:
             self.vistas[clave] = clase_vista(self.contenedor, self)
         return self.vistas[clave]
+
+
+class BienvenidaView(tk.Frame):
+    """Vista de bienvenida mostrada al iniciar la aplicación."""
+
+    def __init__(self, parent, controller):
+        super().__init__(parent, bg=controller.bg_color)
+
+        # Contenedor central
+        lbl_titulo = tk.Label(
+            self,
+            text="¡Bienvenido a Software FJ!",
+            font=("Helvetica", 24, "bold"),
+            bg=controller.bg_color,
+            fg=controller.text_dark
+        )
+        lbl_titulo.pack(pady=(150, 10))
+
+        lbl_instruccion = tk.Label(
+            self,
+            text="Seleccione uno de los módulos de la barra lateral izquierda\npara comenzar a administrar clientes, servicios y reservas.",
+            font=("Helvetica", 12),
+            bg=controller.bg_color,
+            fg="#475569",
+            justify="center"
+        )
+        lbl_instruccion.pack(pady=10)
+
+        lbl_logo = tk.Label(
+            self,
+            text="🚀",
+            font=("Helvetica", 64),
+            bg=controller.bg_color
+        )
+        lbl_logo.pack(pady=20)
 
 
 def iniciar_app():
